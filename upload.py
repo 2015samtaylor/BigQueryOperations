@@ -4,33 +4,29 @@ import pysftp
 import pandas as pd
 pd.set_option('display.max_columns', None)
 
-# Use
-cnopts = pysftp.CnOpts()
-cnopts.hostkeys = None
+# # Use
+# cnopts = pysftp.CnOpts()
+# cnopts.hostkeys = None
 
 
-#Get Data from PS Data Export Manager SFTP folder, and move to BigQuery
-with pysftp.Connection(
-    host="sftp.illuminateed.com",
-    username="greendottn",
-    password="*********",
-    cnopts=cnopts
-) as sftp:
-    # Download a remote file to the local machine
-    remote_file = "/greendottn/custom_report_standards_2024"
-    local_file = "local_file.csv"
-    sftp.get(remote_file, local_file)
+# #Get Data from PS Data Export Manager SFTP folder, and move to BigQuery
+# with pysftp.Connection(
+#     host="sftp.illuminateed.com",
+#     username="greendottn",
+#     password="*********",
+#     cnopts=cnopts
+# ) as sftp:
+#     # Download a remote file to the local machine
+#     remote_file = "/greendottn/custom_report_standards_2024"
+#     local_file = "local_file.csv"
+#     sftp.get(remote_file, local_file)
 
 
 
 # --------------------------------Use BigQuery creds to upload to simple storage-----------------------
 
-# Set the path to your service account key file
-key_file_path = "test.json"
-
-
 # Set the GOOGLE_APPLICATION_CREDENTIALS environment variable
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = key_file_path
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = 'keys.json'
 
 
 def upload_csv_to_storage(bucket_name, source_file_path, destination_blob_name):
@@ -52,13 +48,17 @@ def upload_csv_to_storage(bucket_name, source_file_path, destination_blob_name):
 
 
 # Replace these with your GCP project and Cloud Storage details
-bucket_name = "test"
-csv_file_path = "test.csv"
-destination_blob_name = "test.csv"
+bucket_name = "psholdingbucket"
+source_file_path = "students.csv"
+destination_blob_name = "student_data/students.csv"
 
 
 # Call the function to upload the CSV file
-upload_csv_to_storage(bucket_name, csv_file_path, destination_blob_name)
+upload_csv_to_storage(bucket_name, source_file_path, destination_blob_name)
 
 
 # --------------------------Once Uploaded to Google Cloud Storage Replicate in DB-----------
+
+#name of bucket in Google Cloud is 
+# bucket name is tn-ps
+#single region
