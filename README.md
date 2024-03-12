@@ -1,47 +1,39 @@
-# Data Transfer from SFTP to Google Cloud Storage and BigQuery
+## README: Data Pipeline Automation
 
-This Python script facilitates the download of a CSV file from an SFTP server and the subsequent upload to both Google Cloud Storage and BigQuery. It is designed to work with Google Cloud Storage and BigQuery, using the `google-cloud-storage` and `google-cloud-bigquery` libraries.
+### Overview
+This project demonstrates a data pipeline automation process using Python. It connects to a remote server via SFTP, downloads a file, uploads it to Google Cloud Storage (GCS), and then loads the data into BigQuery for analysis.
 
-## Prerequisites
+### Installation
+1. Clone the repository to your local machine.
+2. Install the required Python packages using `pip install -r requirements.txt`.
 
-1. **Install Required Packages:**
-   - Install the necessary Python packages using the following command:
-     ```bash
-     pip install pysftp pandas google-cloud-storage google-cloud-bigquery
-     ```
+### Usage
+1. **Setup Google Cloud Platform (GCP) Credentials**:
+   - Set up your Google Cloud Platform (GCP) credentials by creating a service account and downloading the JSON key file. Set the environment variable `GOOGLE_APPLICATION_CREDENTIALS` to the path of your JSON key file.
+   
+2. **SFTP Configuration**:
+   - Uncomment and configure the SFTP connection parameters in the provided script.
 
-2. **Google Cloud Service Account Key:**
-   - Obtain a service account key JSON file from the [Google Cloud Console](https://console.cloud.google.com/iam-admin/serviceaccounts).
-   - Set the path to your service account key file in the script.
+3. **Running the Script**:
+   - Execute the script to start the data pipeline automation process. It will perform the following steps:
+     - Connect to the SFTP server and download a remote file.
+     - Create a new bucket in Google Cloud Storage (GCS) or use an existing one.
+     - Upload the downloaded file to the GCS bucket.
+     - Load the data from the GCS bucket into a BigQuery table.
+     - Execute a SQL query on the BigQuery table for data analysis.
 
-## Configuration
+4. **Customization**:
+   - Modify the `Create` class attributes to fit your specific data pipeline requirements.
+   - Customize the SQL queries to analyze different datasets in BigQuery.
 
-1. **SFTP Credentials:**
-   - Provide your SFTP credentials (host, username, password) in the script.
-   - Adjust the remote and local file paths as needed.
+### Dependencies
+- **Python Libraries**:
+  - `pandas`: Data manipulation library.
+  - `pandas_gbq`: Google BigQuery integration for Pandas.
+  - `pysftp`: SFTP client library.
+  - `google-cloud-storage`: Google Cloud Storage client library.
+  - `google-cloud-bigquery`: Google BigQuery client library.
 
-2. **Google Cloud Storage:**
-   - Replace the `bucket_name`, `csv_file_path`, and `destination_blob_name` with your Google Cloud Storage details.
-   - Make sure you have the necessary permissions to write to the specified bucket.
-
-3. **Google Cloud Service Account Key:**
-   - Set the `key_file_path` variable to the path of your service account key JSON file.
-
-## Usage
-
-1. **Download CSV from SFTP:**
-   - Run the script to download the CSV file from the specified SFTP server.
-
-2. **Upload to Google Cloud Storage:**
-   - The script will then upload the CSV file to the specified Google Cloud Storage bucket.
-
-3. **Replicate in BigQuery:**
-   - You can manually load the CSV into BigQuery using the [BigQuery Console](https://console.cloud.google.com/bigquery).
-   - Alternatively, you can extend the script to automate the load into BigQuery using the `google-cloud-bigquery` library.
-
-## Additional Notes
-
-- The `pysftp` library is used for SFTP operations.
-- Ensure the proper setup of your Google Cloud Storage and BigQuery environment.
-
----
+### Notes
+- Ensure that the SFTP server, Google Cloud Storage, and BigQuery environments are properly configured with the necessary permissions and access credentials.
+- This script serves as a basic example and may require additional error handling, logging, and security enhancements for production use.
