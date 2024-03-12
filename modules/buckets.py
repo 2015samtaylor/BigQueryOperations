@@ -8,7 +8,7 @@ import pandas_gbq
 
 
 
-def create_bucket(bucket_name, storage_class = 'STANDARD', location='us-south1'):
+def create_bucket(bucket_name, location, storage_class = 'STANDARD'):
 
     storage_client = storage.Client()
 
@@ -22,7 +22,7 @@ def create_bucket(bucket_name, storage_class = 'STANDARD', location='us-south1')
         bucket = storage_client.bucket(bucket_name)
         bucket.storage_class = storage_class
 
-        bucket = storage_client.create_bucket(bucket, location=location)
+        bucket = storage_client.create_bucket(bucket, location)
         print(f'\n\nBucket {bucket_name} created in {location} with {storage} storage class.')
     
 
@@ -82,7 +82,7 @@ def download_from_bucket(source_blob_name, destination_file_path, bucket_name):
 #Upload to BiqQuery using Pandas_GBQ. 
 #Schema is created based on pandas dtypes. 
         
-def upload_to_bq_table(cloud_storage_uri, project_id, db, table_name, location='us-south1'):
+def upload_to_bq_table(cloud_storage_uri, project_id, db, table_name, location):
 
   
     # project, DB, table name
@@ -104,7 +104,7 @@ def upload_to_bq_table(cloud_storage_uri, project_id, db, table_name, location='
 
 
 
-#Not SQL query an existing table
+
    
 
 
